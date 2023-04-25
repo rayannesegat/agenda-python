@@ -1,0 +1,168 @@
+#AGENDA TELEFONICA
+def menu_principal():
+    print("----------------------------------------------")
+    print("Esta é uma agenda telefônica criada em Python!")
+    print("----------------------------------------------")
+
+    agenda = []
+
+    while True:
+        print("----------------------------------------------")
+        print("(1) Adicionar contato!       (2) Consultar contato!")
+        print("(3) Alterar contato!         (4) Remover contato! ")
+        print("(5) Quantidade de contatos!  (6) Finalizar sessão! ")
+        print("----------------------------------------------")
+
+        entrada = int(input("Escolha qual ação você quer fazer: "))
+        print("----------------------------------------------")
+
+        if entrada == 1:
+            print("Novo cadastro de usuário!")
+            novo_contato(agenda)
+            salvar_contato(agenda)
+        elif entrada == 2:
+            print("Consultando contato!")
+            consulta_contato(agenda)
+        elif entrada == 3:
+            print("Alterando cadastro!")
+            alterar_contato(agenda)
+            salvar_contato(agenda)
+        elif entrada == 4:
+            print("Removendo cadastro!")
+            remover_contato(agenda)
+            salvar_contato(agenda)
+        elif entrada == 5:
+            print("Consultado usuários cadastrados!")
+            quantidade_usuario(agenda)
+        else:
+            print("Finalizando sessão!")
+            break
+
+
+def novo_contato(agenda):
+
+    print("----------------------------------------------")
+
+    nome = input("Insira o seu primeiro nome: ")
+    tel = input("Insira o seu contato telefônico: ")
+    email = input("Insira o seu endereço eletrônico: ")
+    twitter = input("Insira a sua conta no Twitter: ")
+    instagram = input("Insira a sua conta no Instagram: ")
+
+    usuario = { "nome": nome, "telefone": tel, "email": email, "twitter": twitter, "instagram": instagram }
+
+    agenda.append(usuario)
+
+    print("Usuário cadastrado!")
+    print("----------------------------------------------")
+
+def salvar_contato(agenda):
+
+    print("----------------------------------------------")
+
+    arquivo = open("contatos.txt", "w")
+
+    for usuario in agenda:
+        arquivo.write("{}, {}, {}, {}, {}\n".format(usuario ["nome"], usuario["telefone"], usuario["email"],
+                                                  usuario["twitter"], usuario["instagram"]))
+    arquivo.close()
+
+def conferindo_existencia(agenda, usuario):
+
+    if len(agenda) > 0:
+        for usuario in agenda:
+                return True
+    return False
+
+def quantidade_usuario(agenda):
+
+    print("----------------------------------------------")
+
+    if len(agenda) > 0:
+        for a, usuario in enumerate(agenda):
+            print("\tUsuário: {}".format(usuario["nome"]))
+            print("\tTelefone: {}".format(usuario["telefone"]))
+            print("\tE-mail: {}".format(usuario["email"]))
+            print("\tTwitter: {}".format(usuario["twitter"]))
+            print("\tInstagram: {}".format(usuario["instagram"]))
+
+        print("Há {} usuários cadastrados!".format(len(agenda)))
+    else:
+        print("Ainda não há usuário cadastrado na agenda!")
+
+def consulta_contato(agenda):
+
+    print("----------------------------------------------")
+
+    if len(agenda) > 0:
+        nome = input("Digite o nome do contato a ser consultado: ")
+        if conferindo_existencia(agenda, nome):
+            for usuario in agenda:
+                if usuario["nome"] == nome:
+                    print("Usuário: {}".format(usuario["nome"]))
+                    print("Telefone: {}".format(usuario["telefone"]))
+                    print("E-mail: {}".format(usuario["email"]))
+                    print("Twitter: {}".format(usuario["twitter"]))
+                    print("Instagram: {}".format(usuario["instagram"]))
+                    break
+        else:
+            print("Usuário não encontrado!\n")
+    else:
+        print("Ainda não há usuário cadastrado na agenda!")
+
+
+def alterar_contato(agenda):
+
+    print("----------------------------------------------")
+
+    if len(agenda) > 0:
+        nome = input("Digite o nome do contato a ser alterado: ")
+        if conferindo_existencia(agenda, nome):
+            for a, usuario in enumerate(agenda):
+                if usuario["nome"] == nome:
+                    print("Usuário: {}".format(usuario["nome"]))
+                    print("Telefone: {}".format(usuario["telefone"]))
+                    print("E-mail: {}".format(usuario["email"]))
+                    print("Twitter: {}".format(usuario["twitter"]))
+                    print("instagram: {}".format(usuario["instagram"]))
+
+                    usuario["telefone"] = input("Insira o novo telefone do usuário: ")
+                    usuario["email"] = input("Insira o novo email do usuário: ")
+                    usuario["twitter"] = input("Insira o novo twitter do usuário: ")
+                    usuario["instagram"] = input("Insira o novo instagram do usuário: ")
+
+                    print("Dados alterados com sucesso!")
+                    break
+
+        else:
+            print("Usuário não encontrado da agenda telefônica!")
+    else:
+        print("Ainda não há usuário existente na agenda!")
+
+def remover_contato(agenda):
+
+    print("----------------------------------------------")
+
+    if len(agenda) > 0:
+        nome = input("Digite o nome do contato a ser removido: ")
+        if conferindo_existencia(agenda, nome):
+            for a, usuario in enumerate(agenda):
+                if usuario["nome"] == nome:
+                    print("Usuário: {}".format(usuario["nome"]))
+                    print("Telefone: {}".format(usuario["telefone"]))
+                    print("E-mail: {}".format(usuario["email"]))
+                    print("Twitter: {}".format(usuario["twitter"]))
+                    print("instagram: {}".format(usuario["instagram"]))
+
+                    del agenda[a]
+
+                    print("Usuário excluído da agenda telefônica!")
+                    break
+        else:
+            print("Usuário não cadastrado!\n")
+    else:
+        print("Ainda não há usuário existente na agenda!")
+
+
+if(__name__ == "__main__"):
+    menu_principal()
